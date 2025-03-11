@@ -81,6 +81,18 @@ struct RatingsView: View {
 }
 ```
 
+### Customization
+
+```swift
+RatingRequestScreen(/*...*/)
+    .giveRatingButtonTitle("Rate Us")
+    .giveRatingButtonBackgroundColor(.green)
+    .maybeLaterButtonTitle("Not Now")
+    .maybeLaterButtonColor(.green)
+    .screenTitle("Help Us Grow")
+}
+```
+
 ### Creating a Custom Rating Provider
 
 Implement the `AppRatingProviding` protocol to fetch ratings and reviews from your backend service:
