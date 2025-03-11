@@ -29,6 +29,22 @@ public struct RatingRequestScreen {
 
     /// Environment value used to open URLs (like App Store review links).
     @Environment(\.openURL) private var openURL
+    
+    /// Environment value used to set "give rating" button title.
+    @Environment(\.giveRatingButtonTitle) var giveRatingButtonTitle
+    
+    /// Environment value used to set "maybe later" button title.
+    @Environment(\.maybeLaterButtonTitle) var maybeLaterButtonTitle
+    
+    /// Environment value used to set "give rating" button background color.
+    @Environment(\.giveRatingButtonBackgroundColor) var giveRatingButtonBackgroundColor
+    
+    /// Environment value used to set "give rating" button text color.
+    @Environment(\.maybeLaterButtonColor) var maybeLaterButtonColor
+    
+    /// Environment value used to set screen title.
+    @Environment(\.screenTitle) var screenTitle
+    
 
     /// The current state of the view (loading, loaded with data, or error).
     @State var state: ViewState<AppRatingResponse> = .loading

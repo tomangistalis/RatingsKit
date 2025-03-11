@@ -7,13 +7,18 @@
 import SwiftUI
 
 struct FilledButtonStyle: ButtonStyle {
+    private let backgroundColor: Color
+    init(backgroundColor: Color = .accentColor) {
+        self.backgroundColor = backgroundColor
+    }
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding(.horizontal)
             .frame(maxWidth: .infinity)
             .frame(height: 50)
             .background(
-                Color.accentColor,
+                backgroundColor,
                 in: .rect(cornerRadius: 10)
             )
             .foregroundStyle(.white)
@@ -27,6 +32,12 @@ struct FilledButtonStyle: ButtonStyle {
 extension ButtonStyle where Self == FilledButtonStyle {
     @MainActor @preconcurrency
     static var filled: FilledButtonStyle { .init() }
+    
+    @MainActor @preconcurrency
+    static func filled(backgroundColor: Color) -> FilledButtonStyle {
+        .init(backgroundColor: backgroundColor)
+    }
+    
 }
 
 #Preview {

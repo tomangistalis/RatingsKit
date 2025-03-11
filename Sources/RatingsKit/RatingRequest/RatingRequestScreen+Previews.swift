@@ -17,6 +17,11 @@ import SwiftUI
             print("Maybe later tapped")
         }
     )
+    .giveRatingButtonTitle("Rate Us")
+    .giveRatingButtonBackgroundColor(.green)
+    .maybeLaterButtonTitle("Not Now")
+    .maybeLaterButtonColor(.green)
+    .screenTitle("Help Us Grow")
 }
 
 #Preview("No Reviews") {
