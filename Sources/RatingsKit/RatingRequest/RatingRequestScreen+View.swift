@@ -33,7 +33,7 @@ extension RatingRequestScreen {
     }
 
     private var titleView: some View {
-        Text(screenTitle)
+        Text(configuration.screenTitle)
             .font(.largeTitle.bold())
     }
 
@@ -113,7 +113,7 @@ extension RatingRequestScreen {
     }
 
     private var ratingRequestButton: some View {
-        Button(giveRatingButtonTitle, action: ratingRequestAction)
+        Button(configuration.giveRatingButtonTitle, action: ratingRequestAction)
             .buttonStyle(.filled(backgroundColor: giveRatingButtonBackgroundColor))
             .padding()
     }
@@ -121,7 +121,7 @@ extension RatingRequestScreen {
     @ViewBuilder
     private var maybeLaterButton: some View {
         if let maybeLaterAction {
-            Button(maybeLaterButtonTitle, action: maybeLaterAction)
+            Button(configuration.maybeLaterButtonTitle, action: maybeLaterAction)
                 .font(.subheadline)
                 .foregroundColor(maybeLaterButtonColor)
         }

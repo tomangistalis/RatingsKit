@@ -7,7 +7,13 @@
 import SwiftUI
 
 #Preview("Mock Reviews") {
+    let configuration = RatingScreenConfiguration.init(
+        screenTitle: "Help Us Grow",
+        giveRatingButtonTitle: "Rate Us",
+        maybeLaterButtonTitle: "Now Now"
+    )
     RatingRequestScreen(
+        configuration: configuration,
         appId: "1658216708",
         appRatingProvider: MockAppRatingProvider.withMockReviews,
         requestedRatingAction: {
@@ -17,11 +23,8 @@ import SwiftUI
             print("Maybe later tapped")
         }
     )
-    .giveRatingButtonTitle("Rate Us")
     .giveRatingButtonBackgroundColor(.green)
-    .maybeLaterButtonTitle("Not Now")
     .maybeLaterButtonColor(.green)
-    .screenTitle("Help Us Grow")
 }
 
 #Preview("No Reviews") {

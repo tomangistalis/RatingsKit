@@ -29,22 +29,15 @@ public struct RatingRequestScreen {
 
     /// Environment value used to open URLs (like App Store review links).
     @Environment(\.openURL) private var openURL
-    
-    /// Environment value used to set "give rating" button title.
-    @Environment(\.giveRatingButtonTitle) var giveRatingButtonTitle
-    
-    /// Environment value used to set "maybe later" button title.
-    @Environment(\.maybeLaterButtonTitle) var maybeLaterButtonTitle
-    
+        
     /// Environment value used to set "give rating" button background color.
     @Environment(\.giveRatingButtonBackgroundColor) var giveRatingButtonBackgroundColor
     
     /// Environment value used to set "give rating" button text color.
     @Environment(\.maybeLaterButtonColor) var maybeLaterButtonColor
     
-    /// Environment value used to set screen title.
-    @Environment(\.screenTitle) var screenTitle
-    
+    /// Configuration for the rating request screen.
+    let configuration: RatingScreenConfiguration
 
     /// The current state of the view (loading, loaded with data, or error).
     @State var state: ViewState<AppRatingResponse> = .loading
@@ -84,18 +77,21 @@ public struct RatingRequestScreen {
     /// Creates a new rating request screen view.
     ///
     /// - Parameters:
+    /// 
     ///   - appId: The App Store ID of the app.
     ///   - appRatingProvider: The provider used to fetch app rating data.
     ///   - requestedRatingAction: Optional action to perform when the user submits a rating.
     ///   - maybeLaterAction: Optional action to perform when the user chooses "Maybe Later".
     ///   - onError: Optional handler for errors that occur during data fetching.
     public init(
+        configuration: RatingScreenConfiguration = .init(),
         appId: String,
         appRatingProvider: any AppRatingProviding,
         requestedRatingAction: (() -> Void)? = nil,
         maybeLaterAction: (() -> Void)? = nil,
         onError: ((Error) -> Void)? = nil
     ) {
+        self.configuration = configuration
         self.appId = appId
         self.appRatingProvider = appRatingProvider
         self.requestedRatingAction = requestedRatingAction
