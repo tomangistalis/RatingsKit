@@ -84,7 +84,7 @@ struct ReviewCard: View {
     }
     .scrollContentBackground(.hidden)
     .listSectionSeparator(.hidden)
-    .listSectionSpacing(8)
+    .listSectionSpacingIfAvailable()
     .listStyle(.plain)
     .padding()
 }

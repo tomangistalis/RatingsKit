@@ -17,6 +17,9 @@ import SwiftUI
             print("Maybe later tapped")
         }
     )
+    #if os(macOS)
+    .frame(width: 400, height: 600)
+    #endif
 }
 
 #Preview("No Reviews") {
@@ -30,6 +33,9 @@ import SwiftUI
             print("Maybe later tapped")
         }
     )
+    #if os(macOS)
+    .frame(width: 400, height: 600)
+    #endif
 }
 
 #Preview("No Ratings or Reviews") {
@@ -43,6 +49,9 @@ import SwiftUI
             print("Maybe later tapped")
         }
     )
+    #if os(macOS)
+    .frame(width: 400, height: 600)
+    #endif
 }
 
 #Preview("Error State") {
@@ -59,4 +68,7 @@ import SwiftUI
             print("Error occurred: \(error)")
         }
     )
+    #if os(macOS)
+    .frame(width: 400, height: 600)
+    #endif
 }

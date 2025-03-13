@@ -17,6 +17,7 @@ extension RatingRequestScreen: View {
                 )
         }
         .padding(.vertical)
+        .background(.background)
         .overlay(content: errorStateView)
         .task(fetchData)
     }
@@ -79,7 +80,7 @@ extension RatingRequestScreen {
         }
         .scrollContentBackground(.hidden)
         .listSectionSeparator(.hidden)
-        .listSectionSpacing(8)
+        .listSectionSpacingIfAvailable()
         .listStyle(.plain)
         .overlay(noReviewsView)
     }
@@ -89,6 +90,7 @@ extension RatingRequestScreen {
         if isShowingNoReviews {
             ContentUnavailableView(.noReviewsYet, symbol: .squareAndPencil)
                 .aspectRatio(1, contentMode: .fit)
+                .frame(maxWidth: .infinity, alignment: .center)
                 .background(
                     .background.secondary,
                     in: .rect(cornerRadius: 20)
@@ -123,6 +125,8 @@ extension RatingRequestScreen {
         if let maybeLaterAction {
             Button(.maybeLater, action: maybeLaterAction)
                 .font(.subheadline)
+                .buttonStyle(.borderless)
+                .foregroundStyle(Color.accentColor)
         }
     }
 }
@@ -140,8 +144,8 @@ extension RatingRequestScreen {
                 Button(.tryAgain, action: tryAgainAction)
                     .buttonStyle(.filled)
             }
-            .background(.background)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(.background)
         }
     }
 }
