@@ -3,6 +3,7 @@
 A Swift Package that provides an elegant and customizable ratings interface for your iOS and macOS applications.
 
 <img src="https://github.com/user-attachments/assets/da8bdd08-5956-40aa-88b2-0d5698d8dac6" width="600">
+<img src="https://github.com/user-attachments/assets/17c7bd7e-d8ea-4d92-8d58-86aaad8d18a7" width="600">
 
 ## Table of Contents
 
