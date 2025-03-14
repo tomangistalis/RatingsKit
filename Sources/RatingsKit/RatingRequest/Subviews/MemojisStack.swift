@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct MemojisStack: View {
-    let memojis: [Memoji]
+    let memojis: [Image]
     var body: some View {
         HStack(alignment: .center, spacing: -10) {
             memoji(at: 1)
@@ -21,20 +21,23 @@ struct MemojisStack: View {
         }
     }
 
+    @ViewBuilder
     private func memoji(at index: Int) -> some View {
-        memojis[index].image
-            .resizable()
-            .frame(width: 40, height: 40)
-            .background(.background.secondary)
-            .clipShape(.circle)
-            .background(
-                Circle()
-                    .stroke(.background, lineWidth: 4)
-            )
+        if let memoji = memojis[safe: index] {
+            memoji
+                .resizable()
+                .frame(width: 40, height: 40)
+                .background(.background.secondary)
+                .clipShape(.circle)
+                .background(
+                    Circle()
+                        .stroke(.background, lineWidth: 4)
+                )
+        }
     }
 }
 
 #Preview {
-    MemojisStack(memojis: [])
+    MemojisStack(memojis: .defaultMemojis)
         .padding()
 }

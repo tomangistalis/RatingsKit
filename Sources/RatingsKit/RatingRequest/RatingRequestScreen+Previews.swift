@@ -8,58 +8,68 @@ import SwiftUI
 
 #Preview("Mock Reviews") {
     RatingRequestScreen(
-        configuration: .default,
         appId: "1658216708",
         appRatingProvider: MockAppRatingProvider.withMockReviews,
-        requestedRatingAction: {
+        primaryButtonAction: {
             print("Rating Requested")
         },
-        maybeLaterAction: {
+        secondaryButtonAction: {
             print("Maybe later tapped")
         }
     )
-    .primaryButtonBackgroundColor(.green)
-    .secondaryButtonColor(.green)
+    .tint(.accentColor)
+    #if os(macOS)
+    .frame(width: 400, height: 600)
+    #endif
 }
 
 #Preview("No Reviews") {
     RatingRequestScreen(
         appId: "1658216708",
         appRatingProvider: MockAppRatingProvider.noReviews,
-        requestedRatingAction: {
+        primaryButtonAction: {
             print("Rating Requested")
         },
-        maybeLaterAction: {
+        secondaryButtonAction: {
             print("Maybe later tapped")
         }
     )
+    #if os(macOS)
+    .frame(width: 400, height: 600)
+    #endif
 }
 
 #Preview("No Ratings or Reviews") {
     RatingRequestScreen(
         appId: "1658216708",
         appRatingProvider: MockAppRatingProvider.noRatingsOrReviews,
-        requestedRatingAction: {
+        primaryButtonAction: {
             print("Rating Requested")
         },
-        maybeLaterAction: {
+        secondaryButtonAction: {
             print("Maybe later tapped")
         }
     )
+    #if os(macOS)
+    .frame(width: 400, height: 600)
+    #endif
 }
 
 #Preview("Error State") {
     RatingRequestScreen(
         appId: "1658216708",
         appRatingProvider: MockAppRatingProvider.throwsError,
-        requestedRatingAction: {
+        primaryButtonAction: {
             print("Rating Requested")
         },
-        maybeLaterAction: {
+        secondaryButtonAction: {
             print("Maybe later tapped")
         },
         onError: { error in
             print("Error occurred: \(error)")
         }
     )
+    #if os(macOS)
+    .frame(width: 400, height: 600)
+    #endif
 }

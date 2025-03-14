@@ -8,11 +8,11 @@ import SwiftUI
 
 struct ReviewCard: View {
     let review: Review
-    let memoji: Memoji
+    let memoji: Image
 
     init(
         review: Review,
-        memoji: Memoji
+        memoji: Image
     ) {
         self.review = review
         self.memoji = memoji
@@ -28,7 +28,7 @@ struct ReviewCard: View {
                 Spacer(minLength: .zero)
             }
             HStack(spacing: 12) {
-                memoji.image
+                memoji
                     .resizable()
                     .frame(width: 40, height: 40)
                     .background(.background.secondary)
@@ -71,20 +71,20 @@ struct ReviewCard: View {
     List {
         ReviewCard(
             review: .mock(),
-            memoji: Memoji[0]
+            memoji: Image(.person1)
         )
         .listRowSeparator(.hidden)
 
         ReviewCard(
             review: .mock(),
-            memoji: Memoji[0]
+            memoji: Image(.person1)
         )
         .redacted(reason: .placeholder)
         .listRowSeparator(.hidden)
     }
     .scrollContentBackground(.hidden)
     .listSectionSeparator(.hidden)
-    .listSectionSpacing(8)
+    .listSectionSpacingIfAvailable()
     .listStyle(.plain)
     .padding()
 }
