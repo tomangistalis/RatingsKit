@@ -48,7 +48,7 @@ extension RatingRequestScreen {
             Text(.noRatingsYet)
         } else {
             HStack {
-                MemojisStack()
+                MemojisStack(memojis: configuration.memojis)
                 Text(.ratings(totalRatings))
                     .font(.body.weight(.medium))
                     .redacted(when: state.isLoading)
@@ -71,7 +71,7 @@ extension RatingRequestScreen {
                 ForEach(reviews.indices, id: \.self) { index in
                     ReviewCard(
                         review: reviews[index],
-                        memoji: Memoji[index]
+                        memoji: configuration.memojis[index]
                     )
                     .listRowSeparator(.hidden)
                 }

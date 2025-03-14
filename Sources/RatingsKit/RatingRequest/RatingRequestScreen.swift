@@ -31,10 +31,10 @@ public struct RatingRequestScreen {
     @Environment(\.openURL) private var openURL
         
     /// Environment value used to set "give rating" button background color.
-    @Environment(\.giveRatingButtonBackgroundColor) var giveRatingButtonBackgroundColor
+    @Environment(\.primaryButtonBackgroundColor) var giveRatingButtonBackgroundColor
     
     /// Environment value used to set "give rating" button text color.
-    @Environment(\.maybeLaterButtonColor) var maybeLaterButtonColor
+    @Environment(\.secondaryButtonColor) var maybeLaterButtonColor
     
     /// Configuration for the rating request screen.
     let configuration: RatingScreenConfiguration
