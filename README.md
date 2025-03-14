@@ -181,7 +181,7 @@ RatingRequestScreen(
  appId: "YOUR_APP_ID",
  appRatingProvider: YourAppRatingProvider()
 )
-.tilt(.blue) // This changes the accent color for buttons and interactive elements
+.tint(.blue) // This changes the accent color for buttons and interactive elements
 ```
 
 You can replace .blue with any Color value to match your app's theme.
