@@ -12,8 +12,11 @@ import SwiftUI
 /// and providing actions for user interactions like submitting a rating or deferring.
 @MainActor
 public struct RatingRequestScreen {
-    /// Action to perform when the user chooses "Maybe Later".
-    let maybeLaterAction: (() -> Void)?
+    /// Action to perform when the user taps on the secondary button.
+    let secondaryButtonAction: (() -> Void)?
+
+    /// Configuration for the rating request screen.
+    let configuration: RatingScreenConfiguration
 
     /// The App Store ID of the app for which ratings are being requested.
     private let appId: String
@@ -21,8 +24,8 @@ public struct RatingRequestScreen {
     /// The provider used to fetch app rating data.
     private let appRatingProvider: any AppRatingProviding
 
-    /// Action to perform when the user submits a rating.
-    private let requestedRatingAction: (() -> Void)?
+    /// Action to perform when the user taps on the primary button.
+    private let primaryButtonAction: () -> Void
 
     /// Handler for errors that occur during data fetching.
     private let onError: ((Error) -> Void)?
@@ -38,7 +41,7 @@ public struct RatingRequestScreen {
     /// Returns at most 7 reviews from the loaded data, or an empty array if no data is available.
     var reviews: [Review] {
         let allReviews = state.value?.reviews ?? []
-        return Array(allReviews.prefix(7))
+        return Array(allReviews.prefix(configuration.memojis.count))
     }
 
     /// The average rating of the app.
@@ -68,22 +71,25 @@ public struct RatingRequestScreen {
     /// Creates a new rating request screen view.
     ///
     /// - Parameters:
+    /// 
     ///   - appId: The App Store ID of the app.
     ///   - appRatingProvider: The provider used to fetch app rating data.
-    ///   - requestedRatingAction: Optional action to perform when the user submits a rating.
-    ///   - maybeLaterAction: Optional action to perform when the user chooses "Maybe Later".
+    ///   - primaryButtonAction: Action to perform when the user taps on the primary button.
+    ///   - secondaryButtonAction: Optional action to perform when the user taps on the secondary button.
     ///   - onError: Optional handler for errors that occur during data fetching.
     public init(
+        configuration: RatingScreenConfiguration = .init(),
         appId: String,
         appRatingProvider: any AppRatingProviding,
-        requestedRatingAction: (() -> Void)? = nil,
-        maybeLaterAction: (() -> Void)? = nil,
+        primaryButtonAction: @escaping () -> Void = {},
+        secondaryButtonAction: (() -> Void)? = nil,
         onError: ((Error) -> Void)? = nil
     ) {
+        self.configuration = configuration
         self.appId = appId
         self.appRatingProvider = appRatingProvider
-        self.requestedRatingAction = requestedRatingAction
-        self.maybeLaterAction = maybeLaterAction
+        self.primaryButtonAction = primaryButtonAction
+        self.secondaryButtonAction = secondaryButtonAction
         self.onError = onError
     }
 
@@ -93,9 +99,7 @@ public struct RatingRequestScreen {
 
         openURL(url)
 
-        if let requestedRatingAction {
-            requestedRatingAction()
-        }
+        primaryButtonAction()
     }
 
     /// Fetches app rating data asynchronously.

@@ -10,13 +10,14 @@ import SwiftUI
     RatingRequestScreen(
         appId: "1658216708",
         appRatingProvider: MockAppRatingProvider.withMockReviews,
-        requestedRatingAction: {
+        primaryButtonAction: {
             print("Rating Requested")
         },
-        maybeLaterAction: {
+        secondaryButtonAction: {
             print("Maybe later tapped")
         }
     )
+    .tint(.accentColor)
     #if os(macOS)
     .frame(width: 400, height: 600)
     #endif
@@ -26,10 +27,10 @@ import SwiftUI
     RatingRequestScreen(
         appId: "1658216708",
         appRatingProvider: MockAppRatingProvider.noReviews,
-        requestedRatingAction: {
+        primaryButtonAction: {
             print("Rating Requested")
         },
-        maybeLaterAction: {
+        secondaryButtonAction: {
             print("Maybe later tapped")
         }
     )
@@ -42,10 +43,10 @@ import SwiftUI
     RatingRequestScreen(
         appId: "1658216708",
         appRatingProvider: MockAppRatingProvider.noRatingsOrReviews,
-        requestedRatingAction: {
+        primaryButtonAction: {
             print("Rating Requested")
         },
-        maybeLaterAction: {
+        secondaryButtonAction: {
             print("Maybe later tapped")
         }
     )
@@ -58,10 +59,10 @@ import SwiftUI
     RatingRequestScreen(
         appId: "1658216708",
         appRatingProvider: MockAppRatingProvider.throwsError,
-        requestedRatingAction: {
+        primaryButtonAction: {
             print("Rating Requested")
         },
-        maybeLaterAction: {
+        secondaryButtonAction: {
             print("Maybe later tapped")
         },
         onError: { error in

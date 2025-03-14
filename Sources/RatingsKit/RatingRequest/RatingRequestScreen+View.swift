@@ -34,7 +34,7 @@ extension RatingRequestScreen {
     }
 
     private var titleView: some View {
-        Text(.helpUsGrow)
+        Text(configuration.screenTitle)
             .font(.largeTitle.bold())
     }
 
@@ -49,7 +49,7 @@ extension RatingRequestScreen {
             Text(.noRatingsYet)
         } else {
             HStack {
-                MemojisStack()
+                MemojisStack(memojis: configuration.memojis)
                 Text(.ratings(totalRatings))
                     .font(.body.weight(.medium))
                     .redacted(when: state.isLoading)
@@ -63,19 +63,9 @@ extension RatingRequestScreen {
     private var reviewList: some View {
         List {
             if state.isLoading {
-                ForEach(0..<5, id: \.self) { _ in
-                    ReviewCard(review: .mock(), memoji: Memoji[0])
-                        .redacted(reason: .placeholder)
-                        .listRowSeparator(.hidden)
-                }
+                loadingReviewCards
             } else {
-                ForEach(reviews.indices, id: \.self) { index in
-                    ReviewCard(
-                        review: reviews[index],
-                        memoji: Memoji[index]
-                    )
-                    .listRowSeparator(.hidden)
-                }
+                reviewCards
             }
         }
         .scrollContentBackground(.hidden)
@@ -85,17 +75,28 @@ extension RatingRequestScreen {
         .overlay(noReviewsView)
     }
 
+    private var loadingReviewCards: some View {
+        ForEach(0..<5, id: \.self) { _ in
+            ReviewCard(review: .mock(), memoji: Image(.person1))
+                .redacted(reason: .placeholder)
+                .listRowSeparator(.hidden)
+        }
+    }
+
+    private var reviewCards: some View {
+        ForEach(reviews.indices, id: \.self) { index in
+            if let review = reviews[safe: index],
+               let memoji = configuration.memojis[safe: index] {
+                ReviewCard(review: review, memoji: memoji)
+                    .listRowSeparator(.hidden)
+            }
+        }
+    }
+
     @ViewBuilder
     private var noReviewsView: some View {
         if isShowingNoReviews {
-            ContentUnavailableView(.noReviewsYet, symbol: .squareAndPencil)
-                .aspectRatio(1, contentMode: .fit)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .background(
-                    .background.secondary,
-                    in: .rect(cornerRadius: 20)
-                )
-                .padding(20)
+            NoReviewsView()
         }
     }
 }
@@ -106,27 +107,40 @@ extension RatingRequestScreen {
     private func callToActionSection() -> some View {
         if !state.isLoading {
             VStack(spacing: .zero) {
-                ratingRequestButton
-                maybeLaterButton
+                primaryButton
+                secondaryButton
             }
             .background(.background)
             .transition(.move(edge: .bottom))
         }
     }
 
-    private var ratingRequestButton: some View {
-        Button(.giveARating, action: ratingRequestAction)
-            .buttonStyle(.filled)
-            .padding()
+    private var primaryButton: some View {
+        Button(
+            action: ratingRequestAction,
+            label: {
+                Text(configuration.primaryButtonTitle)
+                    .frame(maxWidth: .infinity)
+                    .font(.headline.weight(.semibold))
+                    .frame(height: 42)
+            }
+        )
+        .buttonStyle(.borderedProminent)
+        .buttonBorderShape(.roundedRectangle)
+        .padding()
     }
 
     @ViewBuilder
-    private var maybeLaterButton: some View {
-        if let maybeLaterAction {
-            Button(.maybeLater, action: maybeLaterAction)
-                .font(.subheadline)
-                .buttonStyle(.borderless)
-                .foregroundStyle(Color.accentColor)
+    private var secondaryButton: some View {
+        if let secondaryButtonAction {
+            Button(
+                action: secondaryButtonAction,
+                label: {
+                    Text(configuration.secondaryButtonTitle)
+                        .font(.subheadline.weight(.medium))
+                }
+            )
+            .buttonStyle(.borderless)
         }
     }
 }
@@ -136,16 +150,10 @@ extension RatingRequestScreen {
     @ViewBuilder
     private func errorStateView() -> some View {
         if let errorMessage = state.errorMessage {
-            ContentUnavailableView {
-                Label(.networkError, symbol: .exclamationmarkTriangle)
-            } description: {
-                Text(errorMessage)
-            } actions: {
-                Button(.tryAgain, action: tryAgainAction)
-                    .buttonStyle(.filled)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(.background)
+            TryAgainView(
+                errorMessage: errorMessage,
+                tryAgainAction: tryAgainAction
+            )
         }
     }
 }

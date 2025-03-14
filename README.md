@@ -64,11 +64,11 @@ struct RatingsView: View {
         RatingRequestScreen(
             appId: "YOUR_APP_ID",
             appRatingProvider: YourAppRatingProvider(),
-            requestedRatingAction: {
+            primaryButtonAction: {
                 // Handle when user has requested to leave a rating
                 print("User tapped to leave a rating")
             },
-            maybeLaterAction: {
+            secondaryButtonAction: {
                 // Handle when user decides to rate later
                 print("User will rate later")
             },
@@ -119,7 +119,72 @@ For detailed instructions on how to create a Supabase Edge Function that fetches
 
 ## Customization
 
-RatingsKit's UI is built with SwiftUI and follows system styling, making it blend seamlessly with your app. The interface automatically adapts to light and dark mode and respects system accessibility settings.
+RatingsKit provides a flexible way to tailor the ratings interface through two main customizers: the configuration settings and the screen initializer.
+
+1. RatingScreenConfiguration  
+This struct allows you to customize the visual and textual components of the rating screen. Its initializer provides the following properties:
+
+• screenTitle – The main title displayed at the top of the screen (default is localized as "Help Us Grow").
+• primaryButtonTitle – The label for the primary action button (default is "Give a Rating").
+• secondaryButtonTitle – The label for the secondary action button (default is "Maybe Later").
+• memojis – An array of SwiftUI Images that are shown on the screen. A set of default memojis is provided (via .defaultMemojis).
+
+Example usage:
+```swift
+// Basic customization using RatingScreenConfiguration
+let config = RatingScreenConfiguration(
+    screenTitle: "Rate Our App",
+    primaryButtonTitle: "Rate Now",
+    secondaryButtonTitle: "Maybe Later",
+    memojis: [Image("happy"), Image("excited")]
+)
+```
+2. RatingRequestScreen Initializer  
+This view combines the configuration with data fetching and user actions. Its initializer accepts:
+
+• configuration – An instance of RatingScreenConfiguration to dictate UI appearance.
+• appId – The App Store identifier of your app.
+• appRatingProvider – An object conforming to AppRatingProviding that fetches ratings data.
+• primaryButtonAction – A closure executed when the primary button is tapped (for instance, to open the App Store review page).
+• secondaryButtonAction – An optional closure for handling the secondary button tap (typically for deferring the rating process).
+• onError – An optional error handler closure for managing any issues during data fetching.
+
+Example initialization:
+```swift
+RatingRequestScreen(
+    configuration: config,
+    appId: "YOUR_APP_ID",
+    appRatingProvider: YourAppRatingProvider(),
+    primaryButtonAction: {
+        // Action when the primary button is tapped
+        print("User started rating process")
+    },
+    secondaryButtonAction: {
+        // Action when the secondary button is tapped
+        print("User chose to rate later")
+    },
+    onError: { error in
+        // Handle any errors that occur
+        print("Error encountered: \(error)")
+    }
+)
+```
+Both initializers come with default values for common settings, making it easy to either use the standard configuration or fully customize the experience to match your app's style and workflow.
+
+3. Advanced Button Styling with .tint  
+Since RatingRequestScreen is built on SwiftUI, you can further customize the appearance of the buttons by applying SwiftUI modifiers. For example, use the .tint modifier to change the color of the primary and secondary buttons:
+
+```swift
+// Applying tint to the RatingRequestScreen view
+RatingRequestScreen(
+ configuration: config,
+ appId: "YOUR_APP_ID",
+ appRatingProvider: YourAppRatingProvider()
+)
+.tint(.blue) // This changes the accent color for buttons and interactive elements
+```
+
+You can replace .blue with any Color value to match your app's theme.
 
 ## Contributing
 
