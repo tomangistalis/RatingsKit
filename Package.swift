@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "RatingsKit",
     defaultLocalization: "en",
-    platforms: [.iOS(.v17), .macOS(.v14)],
+    platforms: [.iOS(.v16), .macOS(.v13)],
     products: [
         .library(
             name: "RatingsKit",
