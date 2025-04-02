@@ -68,13 +68,13 @@ struct RatingView: View {
     }
 }
 
-#Preview {
-    @Previewable @State var rating: Double = 5.0
-
-    VStack {
-        RatingView(rating: rating)
-
-        Slider(value: $rating, in: 0...5)
-    }
-    .padding(24)
-}
+//#Preview {
+//    @Previewable @State var rating: Double = 5.0
+//
+//    VStack {
+//        RatingView(rating: rating)
+//
+//        Slider(value: $rating, in: 0...5)
+//    }
+//    .padding(24)
+//}

@@ -31,7 +31,7 @@ struct ReviewCard: View {
                 memoji
                     .resizable()
                     .frame(width: 40, height: 40)
-                    .background(.background.secondary)
+                    .background(Color(UIColor.tertiarySystemBackground))
                     .clipShape(.circle)
 
                 VStack(alignment: .leading, spacing: 6) {
@@ -40,8 +40,13 @@ struct ReviewCard: View {
                     HStack(spacing: .zero) {
                         Text(review.author)
                             .foregroundStyle(.primary)
-                        Text(" • ") + Text(review.date.relativeTime)
-                            .foregroundStyle(.secondary)
+                        if #available(iOS 17.0, *) {
+                            Text(" • ") + Text(review.date.relativeTime)
+                                .foregroundStyle(.secondary)
+                        } else {
+                            Text(" • ") + Text(review.date.relativeTime)
+                                .foregroundColor(.secondary)
+                        }
                     }
                     .font(.caption.weight(.medium))
                 }
@@ -50,7 +55,7 @@ struct ReviewCard: View {
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
-            .background.secondary,
+            Color(UIColor.secondarySystemBackground),
             in: .rect(cornerRadius: 12)
         )
     }

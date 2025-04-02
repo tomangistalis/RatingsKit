@@ -8,11 +8,11 @@ import SwiftUI
 
 struct NoReviewsView: View {
     var body: some View {
-        ContentUnavailableView(.noReviewsYet, symbol: .squareAndPencil)
+        CustomContentUnavailableView(.noReviewsYet, symbol: .squareAndPencil)
             .aspectRatio(1, contentMode: .fit)
             .frame(maxWidth: .infinity, alignment: .center)
             .background(
-                .background.secondary,
+                Color(UIColor.secondarySystemBackground),
                 in: .rect(cornerRadius: 20)
             )
             .padding(20)

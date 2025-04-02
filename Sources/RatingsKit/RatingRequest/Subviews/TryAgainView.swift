@@ -12,7 +12,7 @@ struct TryAgainView: View {
     let tryAgainAction: () -> Void
 
     var body: some View {
-        ContentUnavailableView {
+        CustomContentUnavailableView {
             Label(.networkError, symbol: .exclamationmarkTriangle)
         } description: {
             Text(errorMessage)

@@ -6,23 +6,39 @@
 
 import SwiftUI
 
-extension ContentUnavailableView where Label == SwiftUI.Label<Text, Image>, Description == Text? {
-    package nonisolated init(
-        _ titleKey: LocalizedStringKey,
-        symbol: Image.SFSymbol,
-        description: LocalizedStringKey? = nil,
+struct CustomContentUnavailableView<Label: View, Description: View, Actions: View>: View {
+    let label: Label
+    let description: Description
+    let actions: Actions
+
+    package init(
+        @ViewBuilder label: () -> Label = { EmptyView() },
+        @ViewBuilder description: () -> Description = { EmptyView() },
         @ViewBuilder actions: () -> Actions = { EmptyView() }
     ) {
-        self.init(
-            label: {
-                Label(titleKey, systemImage: symbol.rawValue)
-            },
-            description: {
-                if let description {
-                    Text(description)
-                }
-            },
-            actions: actions
-        )
+        self.label = label()
+        self.description = description()
+        self.actions = actions()
+    }
+
+    var body: some View {
+        VStack {
+            label
+            description
+            actions
+        }
+    }
+}
+
+extension CustomContentUnavailableView where Label == SwiftUI.Label<Text, Image>, Description == EmptyView {
+    init(
+        _ titleKey: LocalizedStringKey,
+        symbol: Image.SFSymbol,
+        @ViewBuilder actions: () -> Actions = { EmptyView() }
+    ) {
+        self.init(label: {
+            Label(titleKey, systemImage: symbol.rawValue)
+        },
+                  actions: actions)
     }
 }

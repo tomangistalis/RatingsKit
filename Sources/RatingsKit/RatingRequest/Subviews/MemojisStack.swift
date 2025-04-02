@@ -27,7 +27,7 @@ struct MemojisStack: View {
             memoji
                 .resizable()
                 .frame(width: 40, height: 40)
-                .background(.background.secondary)
+                .background(Color(UIColor.secondarySystemBackground))
                 .clipShape(.circle)
                 .background(
                     Circle()
