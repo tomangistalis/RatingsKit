@@ -110,6 +110,7 @@ extension RatingRequestScreen {
                 primaryButton
                 secondaryButton
             }
+            .frame(maxWidth: .infinity)
             .background(.background)
             .transition(.move(edge: .bottom))
         }
@@ -125,6 +126,7 @@ extension RatingRequestScreen {
                     .frame(height: 42)
             }
         )
+        .frame(maxWidth: .infinity)
         .buttonStyle(.borderedProminent)
         .buttonBorderShape(.roundedRectangle)
         .padding()
