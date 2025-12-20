@@ -68,23 +68,19 @@ struct ReviewCard: View {
 }
 
 #Preview {
-    List {
-        ReviewCard(
-            review: .mock(),
-            memoji: Image(.person1)
-        )
-        .listRowSeparator(.hidden)
+    ScrollView {
+        LazyVStack(spacing: 12) {
+            ReviewCard(
+                review: .mock(),
+                memoji: Image(.person1)
+            )
 
-        ReviewCard(
-            review: .mock(),
-            memoji: Image(.person1)
-        )
-        .redacted(reason: .placeholder)
-        .listRowSeparator(.hidden)
+            ReviewCard(
+                review: .mock(),
+                memoji: Image(.person1)
+            )
+            .redacted(reason: .placeholder)
+        }
+        .padding()
     }
-    .scrollContentBackground(.hidden)
-    .listSectionSeparator(.hidden)
-    .listSectionSpacingIfAvailable()
-    .listStyle(.plain)
-    .padding()
 }

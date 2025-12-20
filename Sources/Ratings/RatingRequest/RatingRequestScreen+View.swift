@@ -11,13 +11,13 @@ extension RatingRequestScreen: View {
         VStack(spacing: 16) {
             headerSection
             reviewList
-                .safeAreaInset(
-                    edge: .bottom,
-                    content: callToActionSection
-                )
         }
-        .padding(.vertical)
-        .background(.background)
+        .padding(.top)
+        .background(.background.secondary)
+        .safeAreaInset(
+            edge: .bottom,
+            content: callToActionSection
+        )
         .overlay(content: errorStateView)
         .task(fetchData)
     }
@@ -61,17 +61,17 @@ extension RatingRequestScreen {
 // MARK: Review List
 extension RatingRequestScreen {
     private var reviewList: some View {
-        List {
-            if state.isLoading {
-                loadingReviewCards
-            } else {
-                reviewCards
+        ScrollView {
+            LazyVStack(spacing: 12) {
+                if state.isLoading {
+                    loadingReviewCards
+                } else {
+                    reviewCards
+                }
             }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
         }
-        .scrollContentBackground(.hidden)
-        .listSectionSeparator(.hidden)
-        .listSectionSpacingIfAvailable()
-        .listStyle(.plain)
         .overlay(noReviewsView)
     }
 
@@ -79,7 +79,6 @@ extension RatingRequestScreen {
         ForEach(0..<5, id: \.self) { _ in
             ReviewCard(review: .mock(), memoji: Image(.person1))
                 .redacted(reason: .placeholder)
-                .listRowSeparator(.hidden)
         }
     }
 
@@ -88,7 +87,6 @@ extension RatingRequestScreen {
             if let review = reviews[safe: index],
                let memoji = configuration.memojis[safe: index] {
                 ReviewCard(review: review, memoji: memoji)
-                    .listRowSeparator(.hidden)
             }
         }
     }
@@ -106,11 +104,12 @@ extension RatingRequestScreen {
     @ViewBuilder
     private func callToActionSection() -> some View {
         if !state.isLoading {
-            VStack(spacing: .zero) {
+            VStack(spacing: 20) {
                 primaryButton
                 secondaryButton
             }
-            .background(.background)
+            .padding(20)
+            .background(.background.tertiary)
             .transition(.move(edge: .bottom))
         }
     }
@@ -121,13 +120,12 @@ extension RatingRequestScreen {
             label: {
                 Text(configuration.primaryButtonTitle)
                     .frame(maxWidth: .infinity)
-                    .font(.headline.weight(.semibold))
-                    .frame(height: 42)
+                    .font(.title3.weight(.semibold))
+                    .frame(height: 48)
             }
         )
         .buttonStyle(.borderedProminent)
-        .buttonBorderShape(.roundedRectangle)
-        .padding()
+        .buttonBorderShape(.capsule)
     }
 
     @ViewBuilder
@@ -137,7 +135,7 @@ extension RatingRequestScreen {
                 action: secondaryButtonAction,
                 label: {
                     Text(configuration.secondaryButtonTitle)
-                        .font(.subheadline.weight(.medium))
+                        .font(.body.weight(.medium))
                 }
             )
             .buttonStyle(.borderless)
