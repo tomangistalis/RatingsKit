@@ -1,9 +1,7 @@
 # SwiftUI-Ratings
 
 A Swift Package that provides an elegant and customizable ratings interface for your iOS and macOS applications.
-
-<img src="https://github.com/user-attachments/assets/da8bdd08-5956-40aa-88b2-0d5698d8dac6" width="600">
-<img src="https://github.com/user-attachments/assets/17c7bd7e-d8ea-4d92-8d58-86aaad8d18a7" width="600">
+<img width="710" height="710" alt="Screenshot 2025-12-20 at 1 43 06 PM" src="https://github.com/user-attachments/assets/6a36a222-cfa8-49bc-8791-ac5fe70b2a5c" />
 
 ## Table of Contents
 
