@@ -108,24 +108,36 @@ extension RatingRequestScreen {
                 primaryButton
                 secondaryButton
             }
-            .padding(20)
-            .background(.background.tertiary)
+            .padding(.vertical, 12)
+            .background(.background.secondary)
             .transition(.move(edge: .bottom))
         }
     }
 
+    /// Same chrome as Recap's dismiss button (system title3 bold, 16pt corners,
+    /// 40pt side inset) so a rating page embedded in What's New matches Continue.
     private var primaryButton: some View {
-        Button(
-            action: ratingRequestAction,
-            label: {
+        Button(action: ratingRequestAction) {
+            HStack {
+                Spacer(minLength: 0)
+
                 Text(configuration.primaryButtonTitle)
-                    .frame(maxWidth: .infinity)
-                    .font(.title3.weight(.semibold))
-                    .frame(height: 48)
+                    .font(.system(.title3, weight: .bold))
+                    .padding(8)
+                    .padding(.vertical, 4)
+                    .padding(.horizontal, 16)
+                    .foregroundStyle(.white)
+
+                Spacer(minLength: 0)
             }
-        )
-        .buttonStyle(.borderedProminent)
-        .buttonBorderShape(.capsule)
+            .contentShape(.rect(cornerRadius: 16))
+        }
+        .buttonStyle(.plain)
+        .contentShape(.rect(cornerRadius: 16))
+        .frame(maxWidth: .infinity)
+        .background(.tint)
+        .clipShape(.rect(cornerRadius: 16))
+        .padding(.horizontal, 40)
     }
 
     @ViewBuilder
