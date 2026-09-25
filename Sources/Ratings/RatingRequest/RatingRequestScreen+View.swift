@@ -114,8 +114,8 @@ extension RatingRequestScreen {
         }
     }
 
-    /// Same chrome as Recap's dismiss button (system title3 bold, 16pt corners,
-    /// 40pt side inset) so a rating page embedded in What's New matches Continue.
+    /// Capsule with Recap's 40pt side inset. Recap's dismiss-button modifiers
+    /// set color and title only, so the shape is applied here.
     private var primaryButton: some View {
         Button(action: ratingRequestAction) {
             HStack {
@@ -130,13 +130,13 @@ extension RatingRequestScreen {
 
                 Spacer(minLength: 0)
             }
-            .contentShape(.rect(cornerRadius: 16))
+            .contentShape(.capsule)
         }
         .buttonStyle(.plain)
-        .contentShape(.rect(cornerRadius: 16))
+        .contentShape(.capsule)
         .frame(maxWidth: .infinity)
         .background(.tint)
-        .clipShape(.rect(cornerRadius: 16))
+        .clipShape(.capsule)
         .padding(.horizontal, 40)
     }
 
