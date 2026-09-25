@@ -13,14 +13,7 @@ extension RatingRequestScreen: View {
             reviewList
         }
         .padding(.top)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.background.secondary)
-        .background {
-            GeometryReader { proxy in
-                Color.clear.preference(key: RatingPageWidthKey.self, value: proxy.size.width)
-            }
-        }
-        .onPreferenceChange(RatingPageWidthKey.self) { pageWidth = $0 }
         .safeAreaInset(
             edge: .bottom,
             content: callToActionSection
@@ -142,9 +135,9 @@ extension RatingRequestScreen {
         .buttonStyle(.plain)
         .contentShape(.rect(cornerRadius: 16))
         .frame(maxWidth: .infinity)
-        .frame(width: pageWidth > 80 ? pageWidth - 80 : nil)
         .background(.tint)
         .clipShape(.rect(cornerRadius: 16))
+        .padding(.horizontal, 40)
     }
 
     @ViewBuilder
@@ -159,14 +152,6 @@ extension RatingRequestScreen {
             )
             .buttonStyle(.borderless)
         }
-    }
-}
-
-private struct RatingPageWidthKey: PreferenceKey {
-    static let defaultValue: CGFloat = 0
-
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = max(value, nextValue())
     }
 }
 

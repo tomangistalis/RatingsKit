@@ -36,10 +36,6 @@ public struct RatingRequestScreen {
     /// The current state of the view (loading, loaded with data, or error).
     @State var state: ViewState<AppRatingResponse> = .loading
 
-    /// Width of this page. The primary button is this minus Recap's 40pt inset
-    /// on each side, so it lines up with the What's New dismiss button.
-    @State var pageWidth: CGFloat = 0
-
     /// A subset of reviews to display in the UI.
     ///
     /// Returns at most 7 reviews from the loaded data, or an empty array if no data is available.
